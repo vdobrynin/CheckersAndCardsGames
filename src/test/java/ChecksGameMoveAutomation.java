@@ -1,12 +1,9 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,16 +22,17 @@ public class ChecksGameMoveAutomation {
     public static void setUp() {
 
         // Set the path to your ChromeDriver executable
-        System.setProperty("webdriver.chrome.driver", "/Users/vasya/IdeaProjects/CheckersGame/src/test/resources/drivers/chromedriver");
+        System.setProperty("webdriver.chrome.driver",
+            "/Users/vasya/IdeaProjects/CheckersGame/src/test/resources/drivers/chromedriver"); // please change user name path
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headed"); // Run Chrome in headless mode (with GUI)
-//        options.addArguments("--headless"); // Run Chrome in headless mode (no GUI)
+        options.addArguments("--headed");   // Run Chrome in headless mode (with GUI)
+//        options.addArguments("--headless");   // Run Chrome in headless mode (no GUI)
 
         // Initialize the WebDriver with ChromeDriver
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Wait for up to 30 seconds
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));   // Wait for up to 30 seconds
 
         // Navigate to the Checkers game page
         driver.get("https://www.gamesforthebrain.com/game/checkers/");
@@ -44,7 +42,7 @@ public class ChecksGameMoveAutomation {
     public void playCheckersGame() {
 
         // Wait for the game to load
-        wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Wait for up to 30 seconds
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));   // Wait for up to 30 seconds
         WebElement pageTitle = wait
             .until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
         assertThat(pageTitle.isDisplayed());
@@ -59,14 +57,7 @@ public class ChecksGameMoveAutomation {
 
         // Restart the game
         WebElement restartButton = driver.findElement(By.cssSelector("a[href='./']"));
-//        WebElement restartButton = driver.findElement(By.linkText("Restart"));
         restartButton.click();
-
-        // Wait for the "Make a move" button to be visible
-//        WebElement makeMoveButton = wait
-//            .until(ExpectedConditions
-//                .visibilityOfElementLocated(By.cssSelector("button[name='move']")));
-//        assertThat(makeMoveButton.isDisplayed());
     }
 
     @AfterAll
