@@ -49,11 +49,11 @@ public class ChecksGameMoveAutomation {
         assertThat(pageTitle.getText().equals("Checkers"));
 
         // Make 5 moves
+        makeMove(6, 2);
+        makeMove(7, 1);
         makeMove(2, 2);
         makeMove(3, 1);
         makeMove(4, 0);
-        makeMove(7, 3);
-        makeMove(1, 3);
 
         // Restart the game
         WebElement restartButton = driver.findElement(By.cssSelector("a[href='./']"));
