@@ -28,7 +28,7 @@ public class ChecksGameMoveAutomation {
 
         // Set the path to your ChromeDriver executable
         System.setProperty("webdriver.chrome.driver",
-            "/Users/vasya/IdeaProjects/CheckersAndCardsGame/src/test/resources/drivers/chromedriver");//--> please change user name path
+            "/Users/vasya/IdeaProjects/CheckersAndCardsGames/src/test/resources/drivers/chromedriver");//--> please change user name path
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
