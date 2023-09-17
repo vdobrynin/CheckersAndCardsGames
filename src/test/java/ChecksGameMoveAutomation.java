@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,17 +19,21 @@ public class ChecksGameMoveAutomation {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
+    public static JavascriptExecutor getExecutor() {
+        return (JavascriptExecutor) driver;
+    }
+
     @BeforeAll
     public static void setUp() {
 
         // Set the path to your ChromeDriver executable
         System.setProperty("webdriver.chrome.driver",
-            "/Users/vasya/IdeaProjects/CheckersGame/src/test/resources/drivers/chromedriver"); // please change user name path
+            "/Users/vasya/IdeaProjects/CheckersGame/src/test/resources/drivers/chromedriver");//--> please change user name path
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headed");   // Run Chrome in headless mode (with GUI)
-//        options.addArguments("--headless");   // Run Chrome in headless mode (no GUI)
+//        options.addArguments("--headed");   // Run Chrome in headless mode (with GUI)
+        options.addArguments("--headless");   // Run Chrome in headless mode (no GUI)
 
         // Initialize the WebDriver with ChromeDriver
         driver = new ChromeDriver(options);
@@ -43,27 +48,20 @@ public class ChecksGameMoveAutomation {
 
         // Wait for the game to load
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));   // Wait for up to 30 seconds
-        WebElement pageTitle = wait
-            .until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
+        WebElement pageTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
         assertThat(pageTitle.isDisplayed());
         assertThat(pageTitle.getText().equals("Checkers"));
 
         // Make 5 moves
         makeMove(6, 2);
-        makeMove(7, 1);
         makeMove(2, 2);
+        makeMove(7, 1);
         makeMove(3, 1);
         makeMove(4, 0);
 
         // Restart the game
         WebElement restartButton = driver.findElement(By.cssSelector("a[href='./']"));
-        restartButton.click();
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        // Close the WebDriver instance when the test is done
-        driver.quit();
+        getExecutor().executeScript("arguments[0].click();", restartButton);
     }
 
     private void makeMove(int row, int column) {
@@ -72,9 +70,9 @@ public class ChecksGameMoveAutomation {
 
         // Click on the cell
         WebElement cell = driver.findElement(By.cssSelector(cellSelector));
-        cell.click();
+        getExecutor().executeScript("arguments[0].click();", cell);
 
-        // Wait for 2 seconds (you can adjust this as needed)
+        // Wait for 2 sec (you can adjust this as needed)
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -92,16 +90,22 @@ public class ChecksGameMoveAutomation {
             int newColumn1 = column + 2;
             String availableMoveSelectorWithJump = String.format("[name='space%d%d']", newRow1, newColumn1);
             WebElement cellWithJump = driver.findElement(By.cssSelector(availableMoveSelectorWithJump));
-            cellWithJump.click();
+            getExecutor().executeScript("arguments[0].click();", cellWithJump);
         } else {
-            nextCell.click();
+            getExecutor().executeScript("arguments[0].click();", nextCell);
         }
 
-        // Wait for 2 seconds (you can adjust this as needed)
+        // Wait for 2 sec (you can adjust this as needed)
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        // Close the WebDriver instance when the test is done
+        driver.quit();
     }
 }
