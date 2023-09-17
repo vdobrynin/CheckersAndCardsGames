@@ -22,14 +22,15 @@ public class DeckOfCardsAPITest {
 
     @BeforeAll
     public static void setUp() {
+
         // Set the path to your ChromeDriver executable
         System.setProperty("webdriver.chrome.driver",
             "/Users/vasya/IdeaProjects/CheckersGame/src/test/resources/drivers/chromedriver");//--> please change user name path
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headed");   // Run Chrome in headless mode (with GUI)
-//        options.addArguments("--headless"); // Run Chrome in headless mode (no GUI)
+//        options.addArguments("--headed");   // Run Chrome in headless mode (with GUI)
+        options.addArguments("--headless"); // Run Chrome in headless mode (no GUI)
 
         // Initialize the WebDriver with ChromeDriver
         driver = new ChromeDriver(options);
@@ -41,6 +42,7 @@ public class DeckOfCardsAPITest {
 
     @Test
     public void checkForBlackjack() {
+
         // Check for the presence of the "Deck of Cards" text
         WebElement pageTitle = driver.findElement(By.xpath("//h1[contains(text(),'Deck of Cards')]"));
         assertTrue(pageTitle.isDisplayed());
@@ -54,10 +56,18 @@ public class DeckOfCardsAPITest {
         Response drawCardsResponse = RestAssured.get("https://deckofcardsapi.com/api/deck/" + deckId + "/draw/?count=6");
         String responseBody = drawCardsResponse.getBody().asString();
 
-        // Split the card data for two players
+        // Split the card data for two players if there are enough elements
+        String[] player1CardData = {};
+        String[] player2CardData = {};
         String[] cards = responseBody.split("\n");
-        String[] player1CardData = cards[0].split(",");
-        String[] player2CardData = cards[1].split(",");
+
+        if (cards.length >= 2) {
+            player1CardData = cards[0].split(",");
+            player2CardData = cards[1].split(",");
+        } else {
+            // Handle the case where there are not enough elements in the array
+            System.err.println("Not enough card data for both players.");
+        }
 
         // Calculate the scores for both players
         int player1Score = calculateHandScore(player1CardData);
@@ -73,6 +83,7 @@ public class DeckOfCardsAPITest {
     }
 
     private int calculateHandScore(String[] cardData) {
+
         int score = 0;
         for (String cardDatum : cardData) {
             String[] cardInfo = cardDatum.split(":");
