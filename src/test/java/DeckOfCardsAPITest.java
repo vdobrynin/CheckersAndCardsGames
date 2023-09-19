@@ -25,7 +25,7 @@ public class DeckOfCardsAPITest {
 
         // Set the path to your ChromeDriver executable
         System.setProperty("webdriver.chrome.driver",
-            (System.getProperty("user.dir") + "/src/test/resources/drivers/chromedriver"));//--> please change user name path
+            (System.getProperty("user.dir") + "/src/test/resources/drivers/chromedriver"));
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
