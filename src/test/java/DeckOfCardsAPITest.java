@@ -29,7 +29,7 @@ public class DeckOfCardsAPITest {
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // Run Chrome in headless mode (no GUI)
+        options.addArguments("--headless"); // Run Chrome in a headless mode (no GUI).
 
         // Initialize the WebDriver with ChromeDriver
         driver = new ChromeDriver(options);
@@ -55,7 +55,7 @@ public class DeckOfCardsAPITest {
         Response drawCardsResponse = RestAssured.get("https://deckofcardsapi.com/api/deck/" + deckId + "/draw/?count=6");
         String responseBody = drawCardsResponse.getBody().asString();
 
-        // Split the card data for two players if there are enough elements
+        // Split the card data for two players if there are enough elements.
         String[] player1CardData = {};
         String[] player2CardData = {};
         String[] cards = responseBody.split("\n");
@@ -64,7 +64,7 @@ public class DeckOfCardsAPITest {
             player1CardData = cards[0].split(",");
             player2CardData = cards[1].split(",");
         } else {
-            // Handle the case where there are not enough elements in the array
+            // Handle the case where there are not enough elements in the array.
             System.err.println("Not enough card data for both players.");
         }
 

@@ -32,8 +32,8 @@ public class ChecksGameMoveAutomation {
 
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headed");   // Run Chrome in headless mode (with GUI)
-        options.addArguments("--headless");   // Run Chrome in headless mode (no GUI)
+//        options.addArguments("--headed");   // Run Chrome in a headless mode (with GUI)
+        options.addArguments("--headless");   // Run Chrome in a headless mode (no GUI)
 
         // Initialize the WebDriver with ChromeDriver
         driver = new ChromeDriver(options);
@@ -83,7 +83,7 @@ public class ChecksGameMoveAutomation {
         int newColumn = column + 1;
         String availableMoveSelector = String.format("[name='space%d%d']", newRow, newColumn);
 
-        // Check if the next cell is not empty and click on it
+        // Check if the next cell isn't empty and click on it.
         WebElement nextCell = driver.findElement(By.cssSelector(availableMoveSelector));
         if (nextCell.getAttribute("src").equals("you1.gif")) {
             int newRow1 = row - 2;
@@ -95,7 +95,7 @@ public class ChecksGameMoveAutomation {
             getExecutor().executeScript("arguments[0].click();", nextCell);
         }
 
-        // Wait for 2 sec (you can adjust this as needed)
+        // Wait for 2 sec (you can adjust this as needed).
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
