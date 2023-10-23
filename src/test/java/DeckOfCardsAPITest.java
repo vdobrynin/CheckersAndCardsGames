@@ -102,6 +102,7 @@ public class DeckOfCardsAPITest {
     @AfterAll
     public static void tearDown() {
         // Close the WebDriver instance when the test is done
+        driver.close();
         driver.quit();
     }
 }
