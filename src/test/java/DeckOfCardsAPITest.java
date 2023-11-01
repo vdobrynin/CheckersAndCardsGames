@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeckOfCardsAPITest {
 
-    private static WebDriver driver;
-    private static WebDriverWait wait;
+    public static WebDriver driver;
+    public static WebDriverWait wait;
 
     @BeforeAll
     public static void setUp() {
