@@ -43,17 +43,26 @@ public class DeckOfCardsAPITest {
     public void checkForBlackjack() {
 
         // Check for the presence of the "Deck of Cards" text
-        WebElement pageTitle = driver.findElement(By.xpath("//h1[contains(text(),'Deck of Cards')]"));
-        assertTrue(pageTitle.isDisplayed());
+        WebElement pageTitle = driver
+            .findElement(By.xpath("//h1[contains(text(),'Deck of Cards')]"));
+        assertTrue(pageTitle
+            .isDisplayed());
 
         // Make API requests to create, shuffle, and draw cards
-        Response createDeckResponse = RestAssured.get("https://deckofcardsapi.com/api/deck/new/");
-        String deckId = createDeckResponse.jsonPath().getString("deck_id");
+        Response createDeckResponse = RestAssured
+            .get("https://deckofcardsapi.com/api/deck/new/");
+        String deckId = createDeckResponse
+            .jsonPath()
+            .getString("deck_id");
 
-        Response shuffleDeckResponse = RestAssured.get("https://deckofcardsapi.com/api/deck/" + deckId + "/shuffle/");
+        Response shuffleDeckResponse = RestAssured
+            .get("https://deckofcardsapi.com/api/deck/" + deckId + "/shuffle/");
 
-        Response drawCardsResponse = RestAssured.get("https://deckofcardsapi.com/api/deck/" + deckId + "/draw/?count=6");
-        String responseBody = drawCardsResponse.getBody().asString();
+        Response drawCardsResponse = RestAssured
+            .get("https://deckofcardsapi.com/api/deck/" + deckId + "/draw/?count=6");
+        String responseBody = drawCardsResponse
+            .getBody()
+            .asString();
 
         // Split the card data for two players if there are enough elements.
         String[] player1CardData = {};
@@ -61,8 +70,10 @@ public class DeckOfCardsAPITest {
         String[] cards = responseBody.split("\n");
 
         if (cards.length >= 2) {
-            player1CardData = cards[0].split(",");
-            player2CardData = cards[1].split(",");
+            player1CardData = cards[0]
+                .split(",");
+            player2CardData = cards[1]
+                .split(",");
         } else {
             // Handle the case where there are not enough elements in the array.
             System.err.println("Not enough card data for both players.");
@@ -85,8 +96,11 @@ public class DeckOfCardsAPITest {
 
         int score = 0;
         for (String cardDatum : cardData) {
-            String[] cardInfo = cardDatum.split(":");
-            String cardValue = cardInfo[1].trim().replaceAll("\"", "");
+            String[] cardInfo = cardDatum
+                .split(":");
+            String cardValue = cardInfo[1]
+                .trim()
+                .replaceAll("\"", "");
 
             if (cardValue.equals("KING") || cardValue.equals("QUEEN") || cardValue.equals("JACK")) {
                 score += 10;
