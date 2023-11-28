@@ -14,7 +14,7 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;;
 
-public class ChecksGameMoveAutomation {
+public class CheckersGameAPITest {
 
     private static WebDriver driver;
     private static WebDriverWait wait;
