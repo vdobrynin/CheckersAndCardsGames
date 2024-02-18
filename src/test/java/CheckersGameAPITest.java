@@ -33,7 +33,7 @@ public class CheckersGameAPITest {
         // Optional: You can configure Chrome options if needed
         ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--headed");   // Run Chrome in a headless mode (with GUI)
-        options.addArguments("--headless");   // Run Chrome in a headless mode (no GUI)
+//        options.addArguments("--headless");   // Run Chrome in a headless mode (no GUI)
 
         // Initialize the WebDriver with ChromeDriver
         driver = new ChromeDriver(options);
